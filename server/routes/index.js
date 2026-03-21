@@ -1,13 +1,10 @@
 const router = require('express').Router();
-const AuthController = require('../controllers/authController');
-const authentication = require('../middlewares/authentication');
+const authRoutes = require('./authRoutes');
+const heroRoutes = require('./heroRoutes');
+const itemRoutes = require('./itemRoutes');
 
-// Public routes
-router.post('/register', AuthController.register);
-router.post('/login', AuthController.login);
-router.post('/google-login', AuthController.googleLogin);
-
-// Protected routes
-router.get('/user/profile', authentication, AuthController.getProfile);
+router.use('/', authRoutes);
+router.use('/heroes', heroRoutes);
+router.use('/items', itemRoutes);
 
 module.exports = router;

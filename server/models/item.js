@@ -15,9 +15,19 @@ module.exports = (sequelize, DataTypes) => {
     {
       name: {
         type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: { msg: 'Item name is required' },
+          notEmpty: { msg: 'Item name is required' },
+        },
       },
       type: {
         type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: { msg: 'Item type is required' },
+          notEmpty: { msg: 'Item type is required' },
+        },
       },
       price: {
         type: DataTypes.INTEGER,

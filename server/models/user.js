@@ -60,6 +60,14 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'User',
+      hooks: {
+        beforeCreate(user) {
+          if (user.password) {
+            const { hashPassword } = require('../helpers/bcrypt');
+            user.password = hashPassword(user.password);
+          }
+        },
+      },
     }
   );
   return User;

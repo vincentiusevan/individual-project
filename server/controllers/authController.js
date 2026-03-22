@@ -11,7 +11,7 @@ class AuthController {
       const user = await User.create({
         username,
         email,
-        password: hashPassword(password),
+        password,
       });
 
       res.status(201).json({

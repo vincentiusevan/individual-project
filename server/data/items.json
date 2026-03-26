@@ -1,0 +1,512 @@
+[
+  {
+    "name": "Blade of Despair",
+    "type": "attack",
+    "price": 3010,
+    "imageUrl": null,
+    "description": "Highest Physical Attack",
+    "passive": "Despair: Dealing damage to non-Minion enemies below 50% HP grants 25% extra Physical Attack for 2s (takes effect before damage is dealt)",
+    "stats": { "physicalAttack": 160 }
+  },
+  {
+    "name": "Endless Battle",
+    "type": "attack",
+    "price": 2330,
+    "imageUrl": null,
+    "description": "Enhanced Basic Attacks",
+    "passive": "Divine Justice: After casting skill, next Basic Attack within 3s deals 60% Physical Attack as extra True Damage (1.5s cooldown). Triggering Divine Justice grants 10% extra Movement Speed",
+    "stats": {
+      "physicalAttack": 65,
+      "hp": 250,
+      "cooldownReduction": 10,
+      "movementSpeed": 5,
+      "hybridLifesteal": 15
+    }
+  },
+  {
+    "name": "Malefic Roar",
+    "type": "attack",
+    "price": 2060,
+    "imageUrl": null,
+    "description": "Armor Penetration",
+    "passive": "Armor Buster: When attacking an enemy, gains 0.1% extra Physical Penetration per point of enemy Physical Defense, capped at 30%",
+    "stats": { "physicalAttack": 60, "physicalPenetration": 35 }
+  },
+  {
+    "name": "Sea Halberd",
+    "type": "attack",
+    "price": 2050,
+    "imageUrl": null,
+    "description": "Anti-Regen Physical",
+    "passive": "Lifebane: Dealing damage reduces target Shield and HP Regen by 50% for 3s. Punish: Increase damage by 8% against enemy heroes with higher extra HP",
+    "stats": { "physicalAttack": 80, "attackSpeed": 25 }
+  },
+  {
+    "name": "Hunter Strike",
+    "type": "attack",
+    "price": 2010,
+    "imageUrl": null,
+    "description": "Brief Speed-Up",
+    "passive": "Hunting: Dealing damage to an enemy hero or Creep 5 times in a row grants 50% extra Movement Speed that decays rapidly over 3s (8s cooldown)",
+    "stats": { "physicalAttack": 80, "cooldownReduction": 10, "movementSpeed": 15 }
+  },
+  {
+    "name": "Demon Hunter Sword",
+    "type": "attack",
+    "price": 2180,
+    "imageUrl": null,
+    "description": "Anti-Tank Item",
+    "passive": "Devour: Basic attacks deal 8% of target current HP as Physical Damage (max 60 vs creeps/minions). Each Basic Attack grants 3% Lifesteal for 3s, stacks up to 5 times",
+    "stats": { "physicalAttack": 35, "attackSpeed": 25 }
+  },
+  {
+    "name": "Blade of the Heptaseas",
+    "type": "attack",
+    "price": 1950,
+    "imageUrl": null,
+    "description": "Best for Assassins",
+    "passive": "Ambush: If no damage taken or dealt within 5s, next Basic Attack deals extra Physical Damage equal to 160 plus 40% Physical Attack, and inflicts 40% slow for 1.5s",
+    "stats": { "physicalAttack": 70, "hp": 250 }
+  },
+  {
+    "name": "Windtalker",
+    "type": "attack",
+    "price": 1880,
+    "imageUrl": null,
+    "description": "Splash Damage",
+    "passive": "Typhoon: Every 5-2s (reduced by 0.2s per Basic Attack), next Basic Attack hits up to 3 enemies for 150-362 Magic Damage. Can critically strike, 200% damage to Minions",
+    "stats": { "attackSpeed": 40, "movementSpeed": 20, "critChance": 10 }
+  },
+  {
+    "name": "Rose Gold Meteor",
+    "type": "attack",
+    "price": 1820,
+    "imageUrl": null,
+    "description": "Low-HP Shield",
+    "passive": "Lifeline: Every 4 extra Physical Attack increases Hybrid Defense by 1, up to 50 (halved for non-Fighters). When HP drops below 30%, gains shield and 50% Movement Speed decaying over 3s (60s cooldown)",
+    "stats": { "physicalAttack": 60, "attackSpeed": 30, "lifesteal": 15 }
+  },
+  {
+    "name": "Sky Piercer",
+    "type": "attack",
+    "price": 1500,
+    "imageUrl": null,
+    "description": "Best for Finishers (Attack + Magic)",
+    "passive": "Lethality: After dealing damage to enemy hero, executes if HP below 4%. Gains 10 stacks of Lifebane per kill (loses 30% stacks on death). Each stack increases execute threshold by 0.1%, max 80 stacks",
+    "stats": { "physicalAttack": 100, "magicPower": 100 }
+  },
+  {
+    "name": "Great Dragon Spear",
+    "type": "attack",
+    "price": 2140,
+    "imageUrl": null,
+    "description": "Ultimate Speed Boost",
+    "passive": "Supreme Warrior: After casting Ultimate, increase Movement Speed by 30% for 7.5s (15s cooldown)",
+    "stats": { "physicalAttack": 70, "cooldownReduction": 10, "critChance": 15 }
+  },
+  {
+    "name": "Wind of Nature",
+    "type": "attack",
+    "price": 1910,
+    "imageUrl": null,
+    "description": "Physical Damage Immunity",
+    "passive": "Wind Chant: Immune to all Physical Damage for 2s. Duration halved for non-marksmen (70s cooldown)",
+    "stats": { "physicalAttack": 30, "attackSpeed": 20, "lifesteal": 10 }
+  },
+  {
+    "name": "War Axe",
+    "type": "attack",
+    "price": 2100,
+    "imageUrl": null,
+    "description": "Continuous Damage Boost",
+    "passive": "Fighting Spirit: Attacks grant 12 extra Physical Attack per second for 4s, up to 6 stacks. At full stacks, deals 10% extra True Damage (Marksmen/Mages/Supports only receive 50% stacked effects)",
+    "stats": { "physicalAttack": 35, "hp": 550, "cooldownReduction": 10 }
+  },
+  {
+    "name": "Berserker's Fury",
+    "type": "attack",
+    "price": 2350,
+    "imageUrl": null,
+    "description": "Critical Damage Boost",
+    "passive": "Doom: Crit strikes increase Physical Attack by 5% for 2s",
+    "stats": { "physicalAttack": 65, "critChance": 25, "critDamage": 40 }
+  },
+  {
+    "name": "Haas's Claws",
+    "type": "attack",
+    "price": 2020,
+    "imageUrl": null,
+    "description": "Lifesteal Item",
+    "passive": "Insanity: When HP drops below 50%, gains extra 15% Physical Lifesteal",
+    "stats": { "physicalAttack": 70, "lifesteal": 20 }
+  },
+  {
+    "name": "Golden Staff",
+    "type": "attack",
+    "price": 2000,
+    "imageUrl": null,
+    "description": "Enhanced Attack Effects",
+    "passive": "Swift: Every 1% crit chance increases attack speed by 1%. Endless Strike: After 2 non-crit Basic Attacks, next Basic Attack speed increased by 80% (Attack Speed cap to 500%) and triggers Attack Effects 2 extra times",
+    "stats": { "physicalAttack": 65, "attackSpeed": 30 }
+  },
+  {
+    "name": "Malefic Gun",
+    "type": "attack",
+    "price": 2120,
+    "imageUrl": null,
+    "description": "Penetration and Range",
+    "passive": "Armor Buster: 30% Physical Penetration. Basic attacks gain 12% range and 10% Movement Speed for 0.5s",
+    "stats": { "physicalAttack": 60, "attackSpeed": 25 }
+  },
+  {
+    "name": "Corrosion Scythe",
+    "type": "attack",
+    "price": 2050,
+    "imageUrl": null,
+    "description": "Slow on Basic Attack",
+    "passive": "Corrosion: Basic Attacks have 50% chance to slow target by 30% for 1.5s. Impulse: After slowing, Attack Speed increases by 8% for 5s, stacks up to 5 times",
+    "stats": { "physicalAttack": 35, "attackSpeed": 30, "movementSpeed": 5 }
+  },
+  {
+    "name": "Bloodlust Axe",
+    "type": "attack",
+    "price": 1970,
+    "imageUrl": null,
+    "description": "Spell Vamp Item",
+    "passive": null,
+    "stats": { "physicalAttack": 70, "cooldownReduction": 10, "spellVamp": 20 }
+  },
+  {
+    "name": "Winter Crown",
+    "type": "attack",
+    "price": 1910,
+    "imageUrl": null,
+    "description": "Freeze Immunity (Physical variant)",
+    "passive": "Frozen: Immune to damage and debuffs for 2s but cannot move or use skills (100s cooldown)",
+    "stats": { "physicalAttack": 60, "magicDefense": 25, "hp": 400 }
+  },
+  {
+    "name": "Holy Crystal",
+    "type": "magic",
+    "price": 3000,
+    "imageUrl": null,
+    "description": "Highest Magic Power",
+    "passive": "Mystery: Increases Magic Power by 21%-35% (scales with level)",
+    "stats": { "magicPower": 100 }
+  },
+  {
+    "name": "Divine Glaive",
+    "type": "magic",
+    "price": 1970,
+    "imageUrl": null,
+    "description": "Magic Penetration",
+    "passive": "Spellbreaker: Each point of enemy Magic Defense increases Magic Penetration by 0.1%, capped at 20%",
+    "stats": { "magicPower": 65, "magicPenetration": 40 }
+  },
+  {
+    "name": "Lightning Truncheon",
+    "type": "magic",
+    "price": 2250,
+    "imageUrl": null,
+    "description": "Mana Burst AoE",
+    "passive": "Resonate: Every 6s, next skill deals extra Magic Damage to up to 3 enemies based on max Mana",
+    "stats": { "magicPower": 75, "mana": 300, "cooldownReduction": 10 }
+  },
+  {
+    "name": "Clock of Destiny",
+    "type": "magic",
+    "price": 2030,
+    "imageUrl": null,
+    "description": "Scaling Magic Item",
+    "passive": "Time: Gains +5 Magic Power and +30 HP every 30s, up to 10 stacks. At max stacks gains +5% Magic Power and +300 Mana",
+    "stats": { "magicPower": 60, "hp": 615, "mana": 600, "cooldownReduction": 10 }
+  },
+  {
+    "name": "Concentrated Energy",
+    "type": "magic",
+    "price": 2020,
+    "imageUrl": null,
+    "description": "Magic Lifesteal",
+    "passive": "Recharge: Killing enemy hero recovers 10% HP",
+    "stats": { "magicPower": 70, "hp": 700, "hybridLifesteal": 25 }
+  },
+  {
+    "name": "Genius Wand",
+    "type": "magic",
+    "price": 2000,
+    "imageUrl": null,
+    "description": "Magic Defense Reduction",
+    "passive": "Magic: Dealing damage reduces target Magic Defense by 2-9 for 2s, stacks up to 3 times",
+    "stats": { "magicPower": 75, "movementSpeed": 5 }
+  },
+  {
+    "name": "Glowing Wand",
+    "type": "magic",
+    "price": 2150,
+    "imageUrl": null,
+    "description": "Burn Damage",
+    "passive": "Scorch: Skills burn target for 2-4% current HP as Magic Damage over 3s",
+    "stats": { "magicPower": 75, "hp": 400 }
+  },
+  {
+    "name": "Winter Truncheon",
+    "type": "magic",
+    "price": 1910,
+    "imageUrl": null,
+    "description": "Freeze Immunity",
+    "passive": "Frozen: Immune to damage and debuffs for 2s but cannot move or use skills (100s cooldown)",
+    "stats": { "magicPower": 60, "armor": 25, "hp": 400 }
+  },
+  {
+    "name": "Necklace of Durance",
+    "type": "magic",
+    "price": 2010,
+    "imageUrl": null,
+    "description": "Anti-Regen Magic",
+    "passive": "Lifebane: Dealing damage reduces target Shield and HP Regen by 50% for 3s",
+    "stats": { "magicPower": 60, "cooldownReduction": 10 }
+  },
+  {
+    "name": "Fleeting Time",
+    "type": "magic",
+    "price": 2050,
+    "imageUrl": null,
+    "description": "Ultimate CD Reduction",
+    "passive": "Timestream: After elimination or assist, ultimate cooldown is immediately reduced by 50%",
+    "stats": { "magicPower": 70, "mana": 350, "cooldownReduction": 15 }
+  },
+  {
+    "name": "Enchanted Talisman",
+    "type": "magic",
+    "price": 1870,
+    "imageUrl": null,
+    "description": "Mana Regen and CDR",
+    "passive": "Mana Spring: Regenerates 15% max Mana every 10s. CDR cap increased to 45%",
+    "stats": { "magicPower": 50, "hp": 250, "cooldownReduction": 20 }
+  },
+  {
+    "name": "Blood Wings",
+    "type": "magic",
+    "price": 2100,
+    "imageUrl": null,
+    "description": "Magic Power to HP Shield",
+    "passive": "Guard: Adds 1.5 HP for every 1 Magic Power owned",
+    "stats": { "magicPower": 150, "hp": 500 }
+  },
+  {
+    "name": "Ice Queen Wand",
+    "type": "magic",
+    "price": 2040,
+    "imageUrl": null,
+    "description": "Slow on Skill Damage",
+    "passive": "Ice Bound: Skills dealing damage to enemy hero slows them by 15% for 3s, stacks up to 2 times",
+    "stats": { "magicPower": 75, "hp": 300, "movementSpeed": 10, "spellVamp": 10 }
+  },
+  {
+    "name": "Starlium Scythe",
+    "type": "magic",
+    "price": 2200,
+    "imageUrl": null,
+    "description": "Enhanced Basic Attack for Mages",
+    "passive": "Starlit: After using a skill, next Basic Attack deals extra True Damage equal to 100% Magic Power (1.5s cooldown)",
+    "stats": { "magicPower": 60, "movementSpeed": 5, "cooldownReduction": 10 }
+  },
+  {
+    "name": "Feather of Heaven",
+    "type": "magic",
+    "price": 2030,
+    "imageUrl": null,
+    "description": "Magic Basic Attack",
+    "passive": "Affliction: Basic Attacks deal extra Magic Damage equal to 50% Magic Power",
+    "stats": { "magicPower": 65, "attackSpeed": 30 }
+  },
+  {
+    "name": "Flask of the Oasis",
+    "type": "magic",
+    "price": 1850,
+    "imageUrl": null,
+    "description": "Team Shield Support",
+    "passive": "Blessing: After using skill, nearby allied heroes with HP below 50% gain a shield",
+    "stats": { "magicPower": 55, "hp": 600, "cooldownReduction": 10 }
+  },
+  {
+    "name": "Athena's Shield",
+    "type": "defense",
+    "price": 2150,
+    "imageUrl": null,
+    "description": "Anti-Burst Magic Defense",
+    "passive": "Shield: When taking Magic Damage, reduces Magic Damage taken by 25% for 5s (re-triggers after leaving combat for 10s)",
+    "stats": { "hp": 900, "magicDefense": 62, "hpRegen": 20 }
+  },
+  {
+    "name": "Antique Cuirass",
+    "type": "defense",
+    "price": 2170,
+    "imageUrl": null,
+    "description": "Physical Attack Reduction",
+    "passive": "Deter: When hit by enemy skill, reduces their Physical Attack by 8% for 2s, stacks up to 3 times",
+    "stats": { "hp": 920, "armor": 54, "hpRegen": 30 }
+  },
+  {
+    "name": "Blade Armor",
+    "type": "defense",
+    "price": 1660,
+    "imageUrl": null,
+    "description": "Damage Reflection",
+    "passive": "Vengeance: When struck by Basic Attack, deals Physical Damage equal to 30% incoming damage (before reduction) plus 20% hero Physical Defense to attacker and slows by 15% for 1s",
+    "stats": { "armor": 90 }
+  },
+  {
+    "name": "Dominance Ice",
+    "type": "defense",
+    "price": 2010,
+    "imageUrl": null,
+    "description": "Healing and ATK Speed Reduction",
+    "passive": "Arctic Cold: Taking damage reduces attacker Attack Speed to 80% for 1s and reduces attacker Shield and HP Regen to 50% for 1s",
+    "stats": { "hp": 500, "mana": 500, "armor": 70, "cooldownReduction": 10 }
+  },
+  {
+    "name": "Immortality",
+    "type": "defense",
+    "price": 2120,
+    "imageUrl": null,
+    "description": "Revive After Death",
+    "passive": "Immortal: Resurrect 2.5s after dying with 16% HP and shield absorbing damage (210s cooldown)",
+    "stats": { "hp": 800, "magicDefense": 40 }
+  },
+  {
+    "name": "Oracle",
+    "type": "defense",
+    "price": 1860,
+    "imageUrl": null,
+    "description": "Enhanced Regen",
+    "passive": "Bless: Received Shield and HP Regen effects are increased by 30%",
+    "stats": { "hp": 850, "magicDefense": 36, "cooldownReduction": 10 }
+  },
+  {
+    "name": "Radiant Armor",
+    "type": "defense",
+    "price": 1880,
+    "imageUrl": null,
+    "description": "Anti-Sustained Magic Damage",
+    "passive": "Holy Blessing: Taking Magic Damage grants 6-20 Magic Defense (scales with level) for 5s, up to 6 stacks (1 stack only every 0.6s)",
+    "stats": { "hp": 950, "magicDefense": 52, "hpRegen": 12 }
+  },
+  {
+    "name": "Chastise Pauldron",
+    "type": "defense",
+    "price": 2100,
+    "imageUrl": null,
+    "description": "ATK Speed Reduction (replaces Twilight Armor)",
+    "passive": "Chastise: Taking damage reduces attacker Attack Speed and cap to 75% for 2s. Redemption: When HP drops below 30%, recover 20% Max HP over 2s (60s cooldown)",
+    "stats": { "hp": 1800, "armor": 40 }
+  },
+  {
+    "name": "Guardian Helmet",
+    "type": "defense",
+    "price": 2200,
+    "imageUrl": null,
+    "description": "HP Regen Out of Combat",
+    "passive": "Recovery: Regenerates 1.5%-3.5% Max HP per second out of combat. Each kill/assist increases by 0.25%",
+    "stats": { "hp": 1550, "hpRegen": 20 }
+  },
+  {
+    "name": "Cursed Helmet",
+    "type": "defense",
+    "price": 1910,
+    "imageUrl": null,
+    "description": "AoE Magic Burn",
+    "passive": "Burning Soul: Deals 1.5% Magic Damage equal to Max HP to nearby enemies per second",
+    "stats": { "hp": 1200, "magicDefense": 25 }
+  },
+  {
+    "name": "Thunder Belt",
+    "type": "defense",
+    "price": 1820,
+    "imageUrl": null,
+    "description": "True Damage on Basic Attack",
+    "passive": "Thunderbolt: After using skill, next Basic Attack deals True Damage equal to 50% extra Physical Attack plus 5% max HP to nearby enemies and slows by 40-80% for 1s (1.5s cooldown)",
+    "stats": { "hp": 800, "mana": 400, "armor": 30, "cooldownReduction": 10 }
+  },
+  {
+    "name": "Queen's Wings",
+    "type": "defense",
+    "price": 2250,
+    "imageUrl": null,
+    "description": "Low-HP Damage Reduction",
+    "passive": "Demonize: When HP drops below 40%, reduces damage taken by 20% and increases Spell Vamp by 30% for 5s (60s cooldown)",
+    "stats": { "hp": 1000, "physicalAttack": 25, "cooldownReduction": 10 }
+  },
+  {
+    "name": "Brute Force Breastplate",
+    "type": "defense",
+    "price": 1870,
+    "imageUrl": null,
+    "description": "Stacking Defense on Attack",
+    "passive": "Brute Force: Using skills or Basic Attacks increases Movement Speed by 3% and Physical + Magic Defense by 4 for 4s, stacks up to 5 times",
+    "stats": { "hp": 770, "armor": 54 }
+  },
+  {
+    "name": "Warrior Boots",
+    "type": "movement",
+    "price": 720,
+    "imageUrl": null,
+    "description": "Physical Defense Boots",
+    "passive": "Valor: Physical Defense increases by 5 for each Basic Attack received, up to 25",
+    "stats": { "movementSpeed": 40, "armor": 22 }
+  },
+  {
+    "name": "Tough Boots",
+    "type": "movement",
+    "price": 700,
+    "imageUrl": null,
+    "description": "Magic Defense and CC Reduction",
+    "passive": "Fortitude: Reduces time controlled by 30%",
+    "stats": { "movementSpeed": 40, "magicDefense": 22 }
+  },
+  {
+    "name": "Arcane Boots",
+    "type": "movement",
+    "price": 690,
+    "imageUrl": null,
+    "description": "Magic Penetration Boots",
+    "passive": null,
+    "stats": { "movementSpeed": 40, "magicPenetration": 10 }
+  },
+  {
+    "name": "Swift Boots",
+    "type": "movement",
+    "price": 710,
+    "imageUrl": null,
+    "description": "Attack Speed Boots",
+    "passive": null,
+    "stats": { "movementSpeed": 40, "attackSpeed": 15 }
+  },
+  {
+    "name": "Magic Shoes",
+    "type": "movement",
+    "price": 710,
+    "imageUrl": null,
+    "description": "Cooldown Reduction Boots",
+    "passive": null,
+    "stats": { "movementSpeed": 40, "cooldownReduction": 10 }
+  },
+  {
+    "name": "Rapid Boots",
+    "type": "movement",
+    "price": 750,
+    "imageUrl": null,
+    "description": "Fastest Movement Speed Boots",
+    "passive": "Side Effect: Dealing or taking damage reduces extra Movement Speed by 40 for 5s",
+    "stats": { "movementSpeed": 80 }
+  },
+  {
+    "name": "Demon Shoes",
+    "type": "movement",
+    "price": 720,
+    "imageUrl": null,
+    "description": "Mana Regen Boots",
+    "passive": "Mysticism: Killing enemy hero or assist recovers 10% Mana. Killing minion recovers 4% Mana",
+    "stats": { "movementSpeed": 40, "manaRegen": 30 }
+  }
+]

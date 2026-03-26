@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">98.38% </span>
+                <span class="strong">96.87% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>61/62</span>
+                <span class='fraction'>62/64</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">89.28% </span>
+                <span class="strong">91.66% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>25/28</span>
+                <span class='fraction'>22/24</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">85.71% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>6/6</span>
+                <span class='fraction'>6/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">98.27% </span>
+                <span class="strong">96.66% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>57/58</span>
+                <span class='fraction'>58/60</span>
             </div>
         
             
@@ -203,8 +203,7 @@
 <a name='L138'></a><a href='#L138'>138</a>
 <a name='L139'></a><a href='#L139'>139</a>
 <a name='L140'></a><a href='#L140'>140</a>
-<a name='L141'></a><a href='#L141'>141</a>
-<a name='L142'></a><a href='#L142'>142</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">6x</span>
+<a name='L141'></a><a href='#L141'>141</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -276,7 +275,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
@@ -296,23 +294,17 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -333,10 +325,16 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -416,7 +414,6 @@ class StrategyController {
     }
   }
 &nbsp;
-  // POST /api/strategies/:id/vote
   static async vote(req, res, next) {
     try {
       const { type } = req.body;
@@ -437,26 +434,20 @@ class StrategyController {
         if (existingVote.type === type) {
           throw { name: 'BadRequest', message: 'You already voted this way' };
         }
-        // Change vote direction
         await existingVote.update({ type });
-&nbsp;
-        // Update likes count: changing from down to up = +2, up to down = -2
-        const likeChange = type === 'up' ? <span class="branch-0 cbranch-no" title="branch not covered" >2 </span>: -2;
-        await strategy.update({ likes: strategy.likes + likeChange });
       } else {
-        // New vote
-        await Vote.create({
-          userId: req.user.id,
-          savedStrategyId,
-          type,
-        });
-&nbsp;
-        const likeChange = type === 'up' ? 1 : <span class="branch-1 cbranch-no" title="branch not covered" >-1;</span>
-        await strategy.update({ likes: strategy.likes + likeChange });
+        await Vote.create({ userId: req.user.id, savedStrategyId, type });
       }
 &nbsp;
-      const updated = await SavedStrategy.findByPk(savedStrategyId);
-      res.status(200).json({ message: 'Vote recorded', likes: updated.likes });
+      // Count votes fresh from database
+      const upVotes = await Vote.count({ where: { savedStrategyId, type: 'up' } });
+      const downVotes = await Vote.count({ where: { savedStrategyId, type: 'down' } });
+      const likes = upVotes - downVotes;
+&nbsp;
+      await strategy.update({ likes });
+&nbsp;
+      console.log('upVotes:', upVotes, 'downVotes:', downVotes, 'likes:', likes);
+      res.status(200).json({ message: 'Vote recorded', likes });
     } catch (err) {
       next(err);
     }
@@ -473,12 +464,18 @@ class StrategyController {
 &nbsp;
       if (!vote) throw { name: 'NotFound', message: 'Vote not found' };
 &nbsp;
-      const strategy = await SavedStrategy.findByPk(savedStrategyId);
-      const likeChange = vote.type === 'up' ? <span class="branch-0 cbranch-no" title="branch not covered" >-1 </span>: 1;
-      await strategy.update({ likes: strategy.likes + likeChange });
-&nbsp;
       await vote.destroy();
-      res.status(200).json({ message: 'Vote removed', likes: strategy.likes + likeChange });
+&nbsp;
+      // Recalculate likes from remaining votes
+      const allVotes = await Vote.findAll({ where: { savedStrategyId } });
+      const likes = allVotes.reduce(<span class="fstat-no" title="function not covered" >(t</span>otal, v) =&gt; {
+<span class="cstat-no" title="statement not covered" >        return total + (v.type === 'up' ? 1 : -1);</span>
+      }, 0);
+&nbsp;
+      const strategy = await SavedStrategy.findByPk(savedStrategyId);
+      await strategy.update({ likes });
+&nbsp;
+      res.status(200).json({ message: 'Vote removed', likes });
     } catch (err) {
       next(err);
     }
@@ -493,7 +490,7 @@ module.exports = StrategyController;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-22T12:45:56.268Z
+                at 2026-03-26T02:07:40.744Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

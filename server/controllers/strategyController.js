@@ -69,7 +69,6 @@ class StrategyController {
     }
   }
 
-  // POST /api/strategies/:id/vote
   static async vote(req, res, next) {
     try {
       const { type } = req.body;
@@ -90,26 +89,20 @@ class StrategyController {
         if (existingVote.type === type) {
           throw { name: 'BadRequest', message: 'You already voted this way' };
         }
-        // Change vote direction
         await existingVote.update({ type });
-
-        // Update likes count: changing from down to up = +2, up to down = -2
-        const likeChange = type === 'up' ? 2 : -2;
-        await strategy.update({ likes: strategy.likes + likeChange });
       } else {
-        // New vote
-        await Vote.create({
-          userId: req.user.id,
-          savedStrategyId,
-          type,
-        });
-
-        const likeChange = type === 'up' ? 1 : -1;
-        await strategy.update({ likes: strategy.likes + likeChange });
+        await Vote.create({ userId: req.user.id, savedStrategyId, type });
       }
 
-      const updated = await SavedStrategy.findByPk(savedStrategyId);
-      res.status(200).json({ message: 'Vote recorded', likes: updated.likes });
+      // Count votes fresh from database
+      const upVotes = await Vote.count({ where: { savedStrategyId, type: 'up' } });
+      const downVotes = await Vote.count({ where: { savedStrategyId, type: 'down' } });
+      const likes = upVotes - downVotes;
+
+      await strategy.update({ likes });
+
+      console.log('upVotes:', upVotes, 'downVotes:', downVotes, 'likes:', likes);
+      res.status(200).json({ message: 'Vote recorded', likes });
     } catch (err) {
       next(err);
     }
@@ -126,12 +119,18 @@ class StrategyController {
 
       if (!vote) throw { name: 'NotFound', message: 'Vote not found' };
 
-      const strategy = await SavedStrategy.findByPk(savedStrategyId);
-      const likeChange = vote.type === 'up' ? -1 : 1;
-      await strategy.update({ likes: strategy.likes + likeChange });
-
       await vote.destroy();
-      res.status(200).json({ message: 'Vote removed', likes: strategy.likes + likeChange });
+
+      // Recalculate likes from remaining votes
+      const allVotes = await Vote.findAll({ where: { savedStrategyId } });
+      const likes = allVotes.reduce((total, v) => {
+        return total + (v.type === 'up' ? 1 : -1);
+      }, 0);
+
+      const strategy = await SavedStrategy.findByPk(savedStrategyId);
+      await strategy.update({ likes });
+
+      res.status(200).json({ message: 'Vote removed', likes });
     } catch (err) {
       next(err);
     }

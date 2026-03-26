@@ -67,22 +67,35 @@ class HeroController {
     }
   }
 
-  // POST /api/heroes/sync (admin) - Sync from MLBB Stats API
+  // POST /api/heroes/sync
   static async syncFromAPI(req, res, next) {
     try {
-      // Step 1: Get hero list (has name, head, hero_id)
-      const { data: listRes } = await axios.get(`${BASE_URL}/hero-list`);
-      const records = listRes.data?.records || [];
+      // Fetch ALL pages from hero-list
+      let allRecords = [];
+      let page = 1;
+      let totalFetched = 0;
+      let total = 999;
 
-      if (!records.length) {
+      while (totalFetched < total) {
+        const { data: listRes } = await axios.get(`${BASE_URL}/hero-list?page=${page}`);
+        const records = listRes.data?.records || [];
+        total = listRes.data?.total || 0;
+
+        if (records.length === 0) break;
+
+        allRecords = allRecords.concat(records);
+        totalFetched += records.length;
+        page++;
+      }
+
+      if (allRecords.length === 0) {
         throw { name: 'BadRequest', message: 'No heroes found from MLBB Stats API' };
       }
 
       let success = 0;
       let failed = 0;
 
-      // Step 2: Fetch detail for each hero (has role, lane, abilityshow)
-      for (const record of records) {
+      for (const record of allRecords) {
         try {
           const heroId = record.data?.hero_id;
           if (!heroId) continue;
@@ -90,7 +103,6 @@ class HeroController {
           const name = record.data?.hero?.data?.name;
           const imageUrl = record.data?.hero?.data?.head;
 
-          // Fetch detail for role, lane, stats
           const { data: detailRes } = await axios.get(`${BASE_URL}/hero-detail/${heroId}`);
           const detail = detailRes.data?.records?.[0]?.data?.hero?.data;
 
@@ -99,7 +111,6 @@ class HeroController {
           const lane = detail?.roadsortlabel?.[0] || null;
           const specialty = Array.isArray(detail?.speciality) ? detail.speciality.join('/') : '';
 
-          // Upsert: update if exists, create if not
           const [hero, created] = await Hero.findOrCreate({
             where: { heroId },
             defaults: {
@@ -133,7 +144,6 @@ class HeroController {
           success++;
         } catch (err) {
           failed++;
-          console.log(`Failed hero_id ${record.data?.hero_id}: ${err.message}`);
         }
       }
 
@@ -146,33 +156,29 @@ class HeroController {
     }
   }
 
-  // GET /api/heroes/:id/counters - Get counter data from MLBB Stats API
+  // GET /api/heroes/:id/counters
   static async getCounters(req, res, next) {
     try {
       const hero = await Hero.findByPk(req.params.id);
       if (!hero) throw { name: 'NotFound', message: 'Hero not found' };
 
-      const { data: listRes } = await axios.get(`${BASE_URL}/hero-list`);
-      const records = listRes.data?.records || [];
+      const { data: relationRes } = await axios.get(`${BASE_URL}/hero-relation/${hero.heroId}`);
+      const record = relationRes.data?.records?.[0];
 
-      // Find this hero in the list
-      const found = records.find((r) => r.data?.hero_id === hero.heroId);
-      if (!found || !found.data?.relation) {
+      if (!record || !record.data?.relation) {
         throw { name: 'NotFound', message: 'Counter data not found' };
       }
 
-      const relation = found.data.relation;
+      const relation = record.data.relation;
 
-      // Filter out 0 values
       const strongIds = (relation.strong?.target_hero_id || []).filter((id) => id !== 0);
       const weakIds = (relation.weak?.target_hero_id || []).filter((id) => id !== 0);
       const assistIds = (relation.assist?.target_hero_id || []).filter((id) => id !== 0);
 
-      // Resolve hero names from local DB
       const allIds = [...new Set([...strongIds, ...weakIds, ...assistIds])];
       const relatedHeroes = await Hero.findAll({
         where: { heroId: allIds },
-        attributes: ['heroId', 'name', 'role', 'imageUrl'],
+        attributes: ['id', 'heroId', 'name', 'role', 'imageUrl'],
       });
 
       const heroMap = {};

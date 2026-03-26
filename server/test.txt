@@ -1,0 +1,16 @@
+module.exports = {
+  apps: [
+    {
+      name: 'ml-strategy-lab',
+      script: 'bin/www',
+      env: {
+        NODE_ENV: 'production',
+        PORT: 80,
+        JWT_SECRET: 'dudut',
+        GOOGLE_CLIENT_ID: '371214840489-a3n9cvaq4tdmevqi3r7ch05bkbce5obf.apps.googleusercontent.com',
+        GEMINI_API_KEY: 'AIzaSyAWmOG6cz7u3gRI2fD017Axe03c2zYUliY',
+        DATABASE_URL: 'postgresql://postgres.hkchtprwpxghldyndhww:mzwdazIhTsy1ptPQ@aws-1-ap-southeast-1.pooler.supabase.com:6543/postgres'
+      }
+    }
+  ]
+};

@@ -70,55 +70,46 @@ class HeroController {
   // POST /api/heroes/sync
   static async syncFromAPI(req, res, next) {
     try {
-      // Fetch ALL pages from hero-list
-      let allRecords = [];
-      let page = 1;
-      let totalFetched = 0;
-      let total = 999;
+      // Get hero IDs from hero-list (only returns 20, but we get the total)
+      const { data: listRes } = await axios.get(`${BASE_URL}/hero-list`);
+      const total = listRes.data?.total || 132;
 
-      while (totalFetched < total) {
-        const { data: listRes } = await axios.get(`${BASE_URL}/hero-list?page=${page}`);
-        const records = listRes.data?.records || [];
-        total = listRes.data?.total || 0;
-
-        if (records.length === 0) break;
-
-        allRecords = allRecords.concat(records);
-        totalFetched += records.length;
-        page++;
-      }
-
-      if (allRecords.length === 0) {
-        throw { name: 'BadRequest', message: 'No heroes found from MLBB Stats API' };
-      }
+      // Also collect names/images from the list we do have
+      const listRecords = listRes.data?.records || [];
+      const listMap = {};
+      listRecords.forEach((r) => {
+        listMap[r.data?.hero_id] = {
+          name: r.data?.hero?.data?.name,
+          imageUrl: r.data?.hero?.data?.head,
+        };
+      });
 
       let success = 0;
       let failed = 0;
 
-      for (const record of allRecords) {
+      // Fetch each hero by ID (1 to total)
+      for (let heroId = 1; heroId <= total; heroId++) {
         try {
-          const heroId = record.data?.hero_id;
-          if (!heroId) continue;
-
-          const name = record.data?.hero?.data?.name;
-          const imageUrl = record.data?.hero?.data?.head;
-
           const { data: detailRes } = await axios.get(`${BASE_URL}/hero-detail/${heroId}`);
           const detail = detailRes.data?.records?.[0]?.data?.hero?.data;
 
-          const abilityShow = detail?.abilityshow || [];
-          const role = detail?.sortlabel?.[0] || 'Unknown';
-          const lane = detail?.roadsortlabel?.[0] || null;
-          const specialty = Array.isArray(detail?.speciality) ? detail.speciality.join('/') : '';
+          if (!detail || !detail.name) continue;
+
+          const abilityShow = detail.abilityshow || [];
+          const role = detail.sortlabel?.[0] || 'Unknown';
+          const lane = detail.roadsortlabel?.[0] || null;
+          const specialty = Array.isArray(detail.speciality) ? detail.speciality.join('/') : '';
+
+          const listInfo = listMap[heroId] || {};
 
           const [hero, created] = await Hero.findOrCreate({
             where: { heroId },
             defaults: {
               heroId,
-              name: name || detail?.name || 'Unknown',
+              name: listInfo.name || detail.name || 'Unknown',
               role,
               specialty,
-              imageUrl: imageUrl || detail?.head || null,
+              imageUrl: listInfo.imageUrl || detail.head || null,
               lane: lane === '' ? null : lane,
               durability: parseInt(abilityShow[0]) || 0,
               offense: parseInt(abilityShow[1]) || 0,
@@ -129,10 +120,10 @@ class HeroController {
 
           if (!created) {
             await hero.update({
-              name: name || detail?.name || hero.name,
+              name: listInfo.name || detail.name || hero.name,
               role,
               specialty,
-              imageUrl: imageUrl || detail?.head || hero.imageUrl,
+              imageUrl: listInfo.imageUrl || detail.head || hero.imageUrl,
               lane: lane === '' ? null : lane,
               durability: parseInt(abilityShow[0]) || 0,
               offense: parseInt(abilityShow[1]) || 0,

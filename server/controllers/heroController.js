@@ -2,7 +2,29 @@ const { Hero } = require('../models');
 const axios = require('axios');
 const { Op } = require('sequelize');
 
-const BASE_URL = 'https://mlbb-stats.rone.dev/api';
+const LEGACY_BASE_URL = 'https://mlbb-stats.rone.dev/api';
+const MLBB_ALTERNATIVE_API_URL = 'https://openmlbb.fastapicloud.dev/api';
+const MLBB_API_URL = 'https://mlbb.rone.dev/api';
+
+async function fetchHeroRelation(heroId) {
+  const urls = [
+    `${MLBB_ALTERNATIVE_API_URL}/heroes/${heroId}/relations`,
+    `${MLBB_API_URL}/heroes/${heroId}/relations`,
+    `${LEGACY_BASE_URL}/hero-relation/${heroId}`,
+    `https://mlbb-stats.ridwaanhall.com/api/hero-relation/${heroId}`,
+  ];
+
+  for (const url of urls) {
+    try {
+      const { data } = await axios.get(url);
+      return data;
+    } catch (err) {
+      // Try the next known provider URL before failing the request.
+    }
+  }
+
+  throw { name: 'ExternalApiError', message: 'Failed to fetch counter data' };
+}
 
 class HeroController {
   // GET /api/heroes
@@ -71,7 +93,7 @@ class HeroController {
   static async syncFromAPI(req, res, next) {
     try {
       // Get hero IDs from hero-list (only returns 20, but we get the total)
-      const { data: listRes } = await axios.get(`${BASE_URL}/hero-list`);
+      const { data: listRes } = await axios.get(`${LEGACY_BASE_URL}/hero-list`);
       const total = listRes.data?.total || 132;
 
       // Also collect names/images from the list we do have
@@ -90,7 +112,7 @@ class HeroController {
       // Fetch each hero by ID (1 to total)
       for (let heroId = 1; heroId <= total; heroId++) {
         try {
-          const { data: detailRes } = await axios.get(`${BASE_URL}/hero-detail/${heroId}`);
+          const { data: detailRes } = await axios.get(`${LEGACY_BASE_URL}/hero-detail/${heroId}`);
           const detail = detailRes.data?.records?.[0]?.data?.hero?.data;
 
           if (!detail || !detail.name) continue;
@@ -153,8 +175,9 @@ class HeroController {
       const hero = await Hero.findByPk(req.params.id);
       if (!hero) throw { name: 'NotFound', message: 'Hero not found' };
 
-      const { data: relationRes } = await axios.get(`${BASE_URL}/hero-relation/${hero.heroId}`);
-      const record = relationRes.data?.records?.[0];
+      const relationRes = await fetchHeroRelation(hero.heroId);
+      const records = relationRes.data?.records || [];
+      const record = records.find((r) => Number(r.data?.hero_id) === Number(hero.heroId));
 
       if (!record || !record.data?.relation) {
         throw { name: 'NotFound', message: 'Counter data not found' };
@@ -162,15 +185,20 @@ class HeroController {
 
       const relation = record.data.relation;
 
-      const strongIds = (relation.strong?.target_hero_id || []).filter((id) => id !== 0);
-      const weakIds = (relation.weak?.target_hero_id || []).filter((id) => id !== 0);
-      const assistIds = (relation.assist?.target_hero_id || []).filter((id) => id !== 0);
+      const getTargetHeroIds = (group) =>
+        (group?.target_hero_id || []).map(Number).filter((id) => id !== 0);
+
+      const strongIds = getTargetHeroIds(relation.strong);
+      const weakIds = getTargetHeroIds(relation.weak);
+      const assistIds = getTargetHeroIds(relation.assist);
 
       const allIds = [...new Set([...strongIds, ...weakIds, ...assistIds])];
-      const relatedHeroes = await Hero.findAll({
-        where: { heroId: allIds },
-        attributes: ['id', 'heroId', 'name', 'role', 'imageUrl'],
-      });
+      const relatedHeroes = allIds.length
+        ? await Hero.findAll({
+            where: { heroId: allIds },
+            attributes: ['id', 'heroId', 'name', 'role', 'imageUrl'],
+          })
+        : [];
 
       const heroMap = {};
       relatedHeroes.forEach((h) => {

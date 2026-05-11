@@ -25,6 +25,10 @@ function errorHandler(err, req, res, next) {
       status = 404;
       message = err.message || 'Data not found';
       break;
+    case 'ExternalApiError':
+      status = 502;
+      message = err.message || 'External API error';
+      break;
   }
 
   res.status(status).json({ message });

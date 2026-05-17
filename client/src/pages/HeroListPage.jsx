@@ -8,19 +8,34 @@ export default function HeroListPage() {
   const { list, loading } = useSelector((state) => state.heroes);
   const [search, setSearch] = useState('');
   const [role, setRole] = useState('');
+  const [lane, setLane] = useState('');
 
   const roles = ['Marksman', 'Fighter', 'Assassin', 'Mage', 'Tank', 'Support'];
+  const lanes = ['Gold Lane', 'EXP Lane', 'Mid Lane', 'Jungle', 'Roam'];
 
   useEffect(() => {
     const params = {};
     if (search) params.search = search;
     if (role) params.role = role;
+    if (lane) params.lane = lane;
     dispatch(fetchHeroes(params));
-  }, [dispatch, search, role]);
+  }, [dispatch, search, role, lane]);
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-primary mb-6">Heroes</h1>
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between mb-6">
+        <div>
+          <h1 className="text-3xl font-bold text-primary">Heroes</h1>
+          <p className="text-sm text-gray-400 mt-1">
+            Find heroes by role, lane, or name before building your draft plan.
+          </p>
+        </div>
+        {!loading && (
+          <div className="badge badge-outline badge-lg">
+            {list.length} hero{list.length === 1 ? '' : 'es'}
+          </div>
+        )}
+      </div>
 
       {/* Filters */}
       <div className="flex flex-wrap gap-3 mb-6">
@@ -43,6 +58,31 @@ export default function HeroListPage() {
             </option>
           ))}
         </select>
+        <select
+          className="select select-bordered"
+          value={lane}
+          onChange={(e) => setLane(e.target.value)}
+        >
+          <option value="">All Lanes</option>
+          {lanes.map((l) => (
+            <option key={l} value={l}>
+              {l}
+            </option>
+          ))}
+        </select>
+        {(search || role || lane) && (
+          <button
+            type="button"
+            className="btn btn-ghost"
+            onClick={() => {
+              setSearch('');
+              setRole('');
+              setLane('');
+            }}
+          >
+            Clear
+          </button>
+        )}
       </div>
 
       {/* Hero Grid */}

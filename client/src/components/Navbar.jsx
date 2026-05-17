@@ -1,19 +1,33 @@
-import { Link, useNavigate } from 'react-router';
+import { Link, NavLink, useNavigate } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../features/auth/authSlice';
+
+const publicLinks = [
+  { to: '/heroes', label: 'Heroes' },
+  { to: '/items', label: 'Items' },
+];
+
+const privateLinks = [
+  { to: '/strategy', label: 'AI Strategy' },
+  { to: '/saved', label: 'Saved' },
+];
 
 export default function Navbar() {
   const { token, user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const links = token ? [...publicLinks, ...privateLinks] : publicLinks;
 
   const handleLogout = () => {
     dispatch(logout());
     navigate('/login');
   };
 
+  const navClass = ({ isActive }) =>
+    isActive ? 'bg-primary text-primary-content font-semibold' : 'hover:bg-base-200';
+
   return (
-    <div className="navbar bg-base-100 shadow-lg">
+    <div className="navbar sticky top-0 z-30 border-b border-base-300 bg-base-100/95 shadow-lg backdrop-blur">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -36,22 +50,13 @@ export default function Navbar() {
             tabIndex={0}
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow"
           >
-            <li>
-              <Link to="/heroes">Heroes</Link>
-            </li>
-            <li>
-              <Link to="/items">Items</Link>
-            </li>
-            {token && (
-              <li>
-                <Link to="/strategy">AI Strategy</Link>
+            {links.map((item) => (
+              <li key={item.to}>
+                <NavLink to={item.to} className={navClass}>
+                  {item.label}
+                </NavLink>
               </li>
-            )}
-            {token && (
-              <li>
-                <Link to="/saved">Saved</Link>
-              </li>
-            )}
+            ))}
           </ul>
         </div>
         <Link to="/" className="btn btn-ghost text-xl font-bold text-primary">
@@ -60,28 +65,22 @@ export default function Navbar() {
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1 gap-1">
-          <li>
-            <Link to="/heroes">Heroes</Link>
-          </li>
-          <li>
-            <Link to="/items">Items</Link>
-          </li>
-          {token && (
-            <li>
-              <Link to="/strategy">AI Strategy</Link>
+          {links.map((item) => (
+            <li key={item.to}>
+              <NavLink to={item.to} className={navClass}>
+                {item.label}
+              </NavLink>
             </li>
-          )}
-          {token && (
-            <li>
-              <Link to="/saved">Saved</Link>
-            </li>
-          )}
+          ))}
         </ul>
       </div>
       <div className="navbar-end">
         {token ? (
           <div className="flex items-center gap-3">
-            <span className="text-sm">{user?.username}</span>
+            <div className="hidden text-right sm:block">
+              <p className="text-sm font-semibold leading-tight">{user?.username || 'Player'}</p>
+              <p className="text-xs text-gray-400">{user?.role || 'member'}</p>
+            </div>
             <button onClick={handleLogout} className="btn btn-outline btn-error btn-sm">
               Logout
             </button>

@@ -53,12 +53,15 @@ const heroSlice = createSlice({
     detail: null,
     counters: null,
     loading: false,
+    countersLoading: false,
+    countersError: null,
     error: null,
   },
   reducers: {
     clearHeroDetail(state) {
       state.detail = null;
       state.counters = null;
+      state.countersError = null;
     },
   },
   extraReducers: (builder) => {
@@ -89,15 +92,17 @@ const heroSlice = createSlice({
       })
 
       .addCase(fetchHeroCounters.pending, (state) => {
-        state.loading = true;
+        state.countersLoading = true;
+        state.countersError = null;
       })
       .addCase(fetchHeroCounters.fulfilled, (state, action) => {
-        state.loading = false;
+        state.countersLoading = false;
         state.counters = action.payload;
       })
       .addCase(fetchHeroCounters.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload?.message;
+        state.countersLoading = false;
+        state.counters = null;
+        state.countersError = action.payload?.message || 'Failed to fetch counters';
       })
 
       .addCase(syncHeroes.pending, (state) => {

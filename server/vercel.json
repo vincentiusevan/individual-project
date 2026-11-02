@@ -1,4 +1,10 @@
 {
   "framework": "express",
-  "regions": ["sin1"]
+  "regions": ["sin1"],
+  "crons": [
+    {
+      "path": "/api/heroes",
+      "schedule": "0 3 * * *"
+    }
+  ]
 }

@@ -46,7 +46,7 @@ Create `client/.env` with `VITE_GOOGLE_CLIENT_ID` for Google login. The client t
 
 ## Deploying
 
-The API runs on Vercel and the client runs on Firebase Hosting, both on free plans.
+The API runs on Vercel and the client runs on Firebase Hosting, both on free plans. A daily cron in `server/vercel.json` calls `GET /api/heroes`, so the free Supabase project keeps seeing activity.
 
 Set `DATABASE_URL`, `JWT_SECRET`, `GEMINI_API_KEY`, and `GOOGLE_CLIENT_ID` in the Vercel project, then deploy from `server`. Use a pooler connection string for `DATABASE_URL`, because Vercel has no IPv6 route to a direct Supabase connection.
 

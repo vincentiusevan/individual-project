@@ -557,7 +557,7 @@ For validation errors, `message` can be an array:
 
 | API                                                     | Usage                                       |
 | ------------------------------------------------------- | ------------------------------------------- |
-| **Google Gemini AI** (`gemini-2.5-flash`)               | AI-powered counter strategy recommendations |
+| **Google Gemini AI** (`gemini-3.5-flash-lite`)               | AI-powered counter strategy recommendations |
 | **MLBB Stats API** (`https://mlbb-stats.rone.dev/api/`) | Hero data, stats, counter relationships     |
 
 ---

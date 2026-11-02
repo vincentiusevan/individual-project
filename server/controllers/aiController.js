@@ -73,7 +73,7 @@ Based on the enemy team composition, please provide:
 
 Please respond in a clear, structured format. Be specific with hero names and item names from the lists provided.`;
 
-      const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+      const model = genAI.getGenerativeModel({ model: 'gemini-3.5-flash-lite' });
 
       const result = await model.generateContent(prompt);
       const response = result.response;
@@ -90,7 +90,6 @@ Please respond in a clear, structured format. Be specific with hero names and it
         recommendation: text,
       });
     } catch (err) {
-      console.log('Using API Key:', process.env.GEMINI_API_KEY?.slice(0, 10) + '...');
       console.log('AI Error:', err);
       next(err);
     }

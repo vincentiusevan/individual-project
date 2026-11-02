@@ -1,2 +1,45 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=23215105&assignment_repo_type=AssignmentRepo)
-# Individual Project Phase 2
+# ML Strategy Lab
+
+A draft helper for Mobile Legends: Bang Bang. You pick up to five enemy heroes and Gemini suggests counter picks, item builds, and a game plan. Logged-in users can save a strategy and vote on strategies.
+
+- **Client:** React, Vite, Redux Toolkit, Tailwind CSS, daisyUI
+- **Server:** Express, Sequelize, PostgreSQL, Gemini API
+- **Login:** email and password, or Google
+
+Hero data is pulled from public MLBB APIs through an admin-only endpoint. The API is documented in `server/api-doc.md`.
+
+## Running it
+
+You need Node.js and PostgreSQL. Database settings for local use are in `server/config/config.json`.
+
+Server:
+
+```bash
+cd server
+npm install
+cp .env-example .env
+npx sequelize-cli db:create
+npx sequelize-cli db:migrate
+npx sequelize-cli db:seed:all
+npm run dev
+```
+
+Fill in `.env` first: `JWT_SECRET`, `GOOGLE_CLIENT_ID`, and `GEMINI_API_KEY`. The server runs on port 3000 unless you set `PORT`.
+
+The seeders add items and two users (`admin` and `user1`) but no heroes. To load heroes, log in as `admin` and call `POST /api/heroes/sync`.
+
+Tests:
+
+```bash
+npm test
+```
+
+Client:
+
+```bash
+cd client
+npm install
+npm run dev
+```
+
+Create `client/.env` with `VITE_GOOGLE_CLIENT_ID` for Google login. The client talks to the deployed API. To use your local server, change `baseURL` in `client/src/helpers/api.js`.

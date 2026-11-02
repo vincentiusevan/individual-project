@@ -26,3 +26,6 @@ dist-ssr
 # env and firebase cache
 .env
 .firebase
+
+# vite dep cache
+.vite

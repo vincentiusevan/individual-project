@@ -43,3 +43,20 @@ npm run dev
 ```
 
 Create `client/.env` with `VITE_GOOGLE_CLIENT_ID` for Google login. The client talks to the deployed API. To use your local server, change `baseURL` in `client/src/helpers/api.js`.
+
+## Deploying
+
+The API runs on Vercel and the client runs on Firebase Hosting, both on free plans.
+
+Set `DATABASE_URL`, `JWT_SECRET`, `GEMINI_API_KEY`, and `GOOGLE_CLIENT_ID` in the Vercel project, then deploy from `server`. Use a pooler connection string for `DATABASE_URL`, because Vercel has no IPv6 route to a direct Supabase connection.
+
+```bash
+vercel --prod
+```
+
+Deploy the client from `client`:
+
+```bash
+npm run build
+firebase deploy
+```

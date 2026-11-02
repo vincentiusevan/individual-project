@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
+const pg = require('pg');
 const process = require('process');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
@@ -11,7 +12,8 @@ const db = {};
 
 let sequelize;
 if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+  // Vercel's file tracing misses the pg require inside Sequelize, so pass it directly
+  sequelize = new Sequelize(process.env[config.use_env_variable], { ...config, dialectModule: pg });
 } else {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }

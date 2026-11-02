@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://ip-vincentiusevan.vincsevan.my.id/api',
+  baseURL: 'https://ml-strategy-lab-api.vercel.app/api',
 });
 
 api.interceptors.request.use((config) => {

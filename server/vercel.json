@@ -1,0 +1,4 @@
+{
+  "framework": "express",
+  "regions": ["sin1"]
+}
